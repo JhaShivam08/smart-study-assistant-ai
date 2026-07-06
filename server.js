@@ -6,11 +6,18 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 dotenv.config();
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+// Home Route
+app.get("/", (req, res) => {
+  res.send("🚀 Smart Study Assistant AI Backend is Running!");
+});
+
+// AI Route
 app.post("/ask", async (req, res) => {
   try {
     const { question } = req.body;
@@ -33,6 +40,8 @@ app.post("/ask", async (req, res) => {
   }
 });
 
-app.listen(3002, () => {
-  console.log("✅ Server running at http://localhost:3002");
+const PORT = process.env.PORT || 3002;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
